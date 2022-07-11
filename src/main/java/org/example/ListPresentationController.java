@@ -17,13 +17,15 @@ import java.util.List;
 @Path("/")
 public class ListPresentationController {
     private final List<String> list;
+    private final Node tree;
 
     /**
      * Запоминает список, с которым будет работать.
      * @param list список, с которым будет работать контроллер.
      */
-    public ListPresentationController(List<String> list) {
+    public ListPresentationController(List<String> list, Node tree) {
         this.list = list;
+        this.tree = tree;
     }
 
     /**
@@ -46,12 +48,12 @@ public class ListPresentationController {
     public String getList() {
         String result =
                 "<html>" +
-                "  <head>" +
-                "    <title>Вывод списка</title>" +
-                "  </head>" +
-                "  <body>" +
-                "    <h1>Список</h1>" +
-                "    <ul>";
+                        "  <head>" +
+                        "    <title>Вывод списка</title>" +
+                        "  </head>" +
+                        "  <body>" +
+                        "    <h1>Список</h1>" +
+                        "    <ul>";
         for (int i = 0; i < list.size(); i++) {
             String listItem = list.get(i);
             result += "<li>" + listItem + " <a href=\"edit/" + i + "\">Редактировать</a> </li>";
@@ -102,12 +104,12 @@ public class ListPresentationController {
                         "    <h1>Редактирование элемента списка</h1>" +
                         "    <form method=\"post\" action=\"/edit/" + itemId + "\">" +
                         "      <p>Значение</p>" +
-                        "      <input type=\"text\" name=\"value\" value=\"" + listItem +"\"/>" +
+                        "      <input type=\"text\" name=\"value\" value=\"" + listItem + "\"/>" +
                         "      <input type=\"submit\"/>";
         result +=
                 "            </form>" +
-                "  </body>" +
-                "</html>";
+                        "  </body>" +
+                        "</html>";
         return result;
     }
 
@@ -132,7 +134,7 @@ public class ListPresentationController {
      * Пример вывода вложенного списка.
      */
     @GET
-    @Path("nested_list")
+    @Path("nested_tree")
     @Produces("text/html")
     public String getNestedListExample() {
         return "<html>" +
@@ -141,17 +143,8 @@ public class ListPresentationController {
                 "  </head>" +
                 "  <body>" +
                 "    <h1>Hello world</h1>" +
-                "    <ul>" +
-                "      <li>1</li>" +
-                "      <li>2</li>" +
-                "      <li>3" +
-                "        <ul>" +
-                "          <li>3.1</li>" +
-                "        </ul>" +
-                "      </li>" +
-                "    </ul>" +
+                tree.toStringHTML() +
                 "  </body>" +
                 "</html>";
     }
-
 }

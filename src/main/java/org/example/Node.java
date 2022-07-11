@@ -64,12 +64,12 @@ public class Node {
         }
         StringBuilder result = new StringBuilder();
         result.append("<li>").append(pos.name);
-        if (pos.child == null) {
+        if (pos.children == null) {
             return result.append("</li>").toString();
         }
         result.append("<ul>");
-        for (Node child : pos.child) {
-            result.append(toStringHTML(child));
+        for (Node children : pos.children) {
+            result.append(toStringHTML(children));
         }
         result.append("</ul>");
         return result.append("</li>").toString();
