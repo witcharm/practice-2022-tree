@@ -54,6 +54,26 @@ public class Node {
         }
         return result.toString();
     }
+    public String toStringHTML() {
+        return "<ul>" + toStringHTML(this) + "</ul>";
+    }
+
+    private String toStringHTML(Node pos) {
+        if (pos.name == null) {
+            return "";
+        }
+        StringBuilder result = new StringBuilder();
+        result.append("<li>").append(pos.name);
+        if (pos.child == null) {
+            return result.append("</li>").toString();
+        }
+        result.append("<ul>");
+        for (Node child : pos.child) {
+            result.append(toStringHTML(child));
+        }
+        result.append("</ul>");
+        return result.append("</li>").toString();
+    }
     @Override
     public String toString(){
         return toString(this,0);
